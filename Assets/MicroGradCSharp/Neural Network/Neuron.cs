@@ -48,6 +48,8 @@ namespace Micrograd
 
             //Tanh activation function
             Value output = input.Tanh();
+            //Value output = input.Sigmoid();
+            //Value output = input.Relu();
 
             return output;
         }

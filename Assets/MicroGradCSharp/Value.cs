@@ -218,14 +218,31 @@ namespace Micrograd
         //Relu
         public Value Relu()
         {
-            float relu_data = this.data < 0f ? 0f : this.data;
+            float relu = this.data < 0f ? 0f : this.data;
 
-            Value output = new(relu_data, this, null);
+            Value output = new(relu, this, null);
 
             output.backwardOneStep = () =>
             {
                 //Derivative is 1 if data > 0, otherwhise 0
                 this.grad += output.data > 0f ? output.grad : 0f;
+            };
+
+            return output;
+        }
+
+        //Sigmoid (logistic function)
+        public Value Sigmoid()
+        {
+            float x = this.data;
+
+            float sigmoid = 1f / (1f + MicroMath.Exp(-x));
+
+            Value output = new(sigmoid, this, null);
+
+            output.backwardOneStep = () =>
+            {
+                this.grad += (sigmoid * (1f - sigmoid)) * output.grad;
             };
 
             return output;
