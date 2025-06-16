@@ -101,12 +101,12 @@ for (int j = 0; j < inputData.Length; j++)
 
 When I ran the neural network I got the following results:
 
-| Input  1 | Input  2 | Output   |
-| ---------| -------- | -------- |
-| 0        | 0        | -0,01415 |
-| 0        | 1        |  0,98866 |
-| 1        | 0        | 0,984572 |
-| 1        | 1        | -0,01677 |
+| Input 1  | Input  2 | Wanted   | Actual   |
+| ---------| -------- | -------- | -------- |
+| 0        | 0        | 0        | -0,01415 |
+| 0        | 1        | 1        | 0,988658 |
+| 1        | 0        | 1        | 0,984572 |
+| 1        | 1        | 0        | -0,01677 |
 
 The outputs are very close to the 0 and 1 we wanted - the output will never be exactly 0 or 1. 
 
