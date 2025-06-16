@@ -218,7 +218,10 @@ namespace Micrograd
         //Relu
         public Value Relu()
         {
-            float relu = this.data < 0f ? 0f : this.data;
+            float x = this.data;
+        
+            //Relu(x) = max(0, x)
+            float relu = x < 0f ? 0f : x;
 
             Value output = new(relu, this, null);
 
