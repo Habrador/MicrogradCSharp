@@ -160,7 +160,8 @@ public class NeuralNetworksExperiments
         Value[][] inputData = Value.Convert(new [] { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } });
         Value[] outputData = Value.Convert(new[] { 0f, 1f, 1f, 0f });
 
-        MLP nn = new(2, new int[] { 3, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Linear }); //2 inputs, 3 neurons in the middle layer, 1 output, tanh transfer function
+        //2 inputs, 3 neurons in the middle layer, 1 output, tanh transfer function
+        MLP nn = new(2, new int[] { 3, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Linear }); 
 
         //Train
         for (int i = 0; i <= 100; i++)
