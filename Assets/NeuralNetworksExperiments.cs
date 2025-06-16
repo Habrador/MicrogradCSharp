@@ -104,6 +104,8 @@ public class NeuralNetworksExperiments
                 loss += errorSquare;
             }
 
+            //Divide loss with batch size
+
             if (i % 10 == 0)
             {
                 Debug.Log($"Iteration: {i}, Network error: {loss.data}");

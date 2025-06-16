@@ -65,6 +65,7 @@ namespace Micrograd
             {
                 return input.Sigmoid();
             }
+            //Linear
             else
             {
                 return input;

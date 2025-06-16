@@ -68,7 +68,7 @@ MicroMath.Random.Seed(0);
 Value[][] inputData = Value.Convert(new [] { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } });
 Value[] outputData = Value.Convert(new[] { 0f, 1f, 1f, 0f });
 
-MLP nn = new(2, new int[] { 3, 1 }); //2 inputs, 3 neurons in the middle layer, 1 output
+MLP nn = new(2, new int[] { 3, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Linear }); //2 inputs, 3 neurons in the middle layer, 1 output, tanh transfer function
 
 //Train
 for (int i = 0; i <= 100; i++)
@@ -102,10 +102,10 @@ When I ran the neural network I got the following results:
 
 | Input  1 | Input  2 | Output   |
 | ---------| -------- | -------- |
-| 0        | 0        | 0,004619 |
-| 0        | 1        | 0,928104 |
-| 1        | 0        | 0,912738 |
-| 1        | 1        | 0,012246 |
+| 0        | 0        | -0,01415 |
+| 0        | 1        |  0,98866 |
+| 1        | 0        | 0,984572 |
+| 1        | 1        | -0,01677 |
 
 The outputs are very close to the 0 and 1 we wanted - the output will never be exactly 0 or 1. 
 
