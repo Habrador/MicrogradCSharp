@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Micrograd
@@ -11,11 +12,13 @@ namespace Micrograd
 
 
 
-        public Layer(int neurons_prev, int neurons_this)
+        public Layer(int neurons_prev, int neurons_this, Value.AF af)
         {
             neurons = new Neuron[neurons_this];
         
-            neurons = neurons.Select(item => new Neuron(neurons_prev)).ToArray();
+            neurons = neurons.Select(item => new Neuron(neurons_prev, af)).ToArray();
+
+            //UnityEngine.Debug.Log(af);
         }
 
 

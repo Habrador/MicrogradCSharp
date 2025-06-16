@@ -16,7 +16,7 @@ namespace Micrograd
 
 
         //Ex. 2-3-1 -> nin = 2 nouts = {3, 1}
-        public MLP(int nin, int[] nouts) 
+        public MLP(int nin, int[] nouts, Value.AF[] afs) 
         { 
             //{2, 3, 1}
             size = new List<int> { nin }.Concat(nouts).ToArray();
@@ -24,7 +24,7 @@ namespace Micrograd
             //nouts.Length = 2
             //i = 0 -> size[0] = 2, nout = 3
             //i = 1 -> size[1] = 3, nout = 1 
-            layers = nouts.Select((nout, i) => new Layer(size[i], nout)).ToArray();
+            layers = nouts.Select((nout, i) => new Layer(size[i], nout, afs[i])).ToArray();
         }
 
 

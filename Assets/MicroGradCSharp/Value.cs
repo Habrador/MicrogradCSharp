@@ -196,6 +196,11 @@ namespace Micrograd
         // Activation functions
         //
 
+        public enum AF
+        {
+            Tanh, Relu, Sigmoid, Linear
+        }
+
         //Tanh
         public Value Tanh()
         {

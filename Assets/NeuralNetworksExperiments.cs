@@ -31,7 +31,7 @@ public class NeuralNetworksExperiments
 
         //Create the NN
         //3 inputs, 4 neurons in two middle layers, 1 output
-        MLP nn = new(3, new int[] { 4, 4, 1 });
+        MLP nn = new(3, new int[] { 4, 4, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Tanh, Value.AF.Tanh });
 
         TrainNN(nn, learningRate, inputData, outputData);
         TestNN(nn, inputData, outputData);
@@ -58,7 +58,8 @@ public class NeuralNetworksExperiments
 
         //Create the NN
         //2 inputs, 3 neurons in the middle layer, 1 output
-        MLP nn = new(2, new int[] { 3, 1 });
+        //middle layer uses tanh transfer function, last layer uses linear transfer function
+        MLP nn = new(2, new int[] { 3, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Linear });
 
         TrainNN(nn, learningRate, inputData, outputData);
         TestNN(nn, inputData, outputData);
@@ -157,7 +158,7 @@ public class NeuralNetworksExperiments
         Value[][] inputData = Value.Convert(new [] { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } });
         Value[] outputData = Value.Convert(new[] { 0f, 1f, 1f, 0f });
 
-        MLP nn = new(2, new int[] { 3, 1 }); //2 inputs, 3 neurons in the middle layer, 1 output
+        MLP nn = new(2, new int[] { 3, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Linear }); //2 inputs, 3 neurons in the middle layer, 1 output, tanh transfer function
 
         //Train
         for (int i = 0; i <= 100; i++)

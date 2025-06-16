@@ -14,10 +14,12 @@ namespace Micrograd
         private readonly Value[] w;
         //The bias
         private readonly Value b;
+        //Which activation function to use
+        private readonly Value.AF af;
 
 
 
-        public Neuron(int number_of_inputs)
+        public Neuron(int number_of_inputs, Value.AF af)
         {
             //Init weights
             w = new Value[number_of_inputs];
@@ -27,6 +29,8 @@ namespace Micrograd
 
             //Init the bias with zero which is common in Neural Networks
             b = new(0f);
+
+            this.af = af;
         }
 
 
@@ -46,12 +50,25 @@ namespace Micrograd
 
             Value input = wx + b;
 
-            //Tanh activation function
-            Value output = input.Tanh();
-            //Value output = input.Sigmoid();
-            //Value output = input.Relu();
+            //return input.Tanh();
 
-            return output;
+            //output = activation_function(input)
+            if (af == Value.AF.Tanh)
+            {
+                return input.Tanh();
+            }
+            else if (af == Value.AF.Relu)
+            {
+                return input.Relu();
+            }
+            else if (af == Value.AF.Sigmoid)
+            {
+                return input.Sigmoid();
+            }
+            else
+            {
+                return input;
+            }
         }
 
 
