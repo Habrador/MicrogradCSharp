@@ -126,7 +126,7 @@ public class NeuralNetworksExperiments
                 //Learning rate decay
                 //learningRate = 1f - 0.9f * i / (float)100;
 
-                param.data += -learningRate * param.grad;
+                param.data -= learningRate * param.grad;
             }
         }
     }
@@ -160,7 +160,7 @@ public class NeuralNetworksExperiments
         Value[][] inputData = Value.Convert(new [] { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } });
         Value[] outputData = Value.Convert(new[] { 0f, 1f, 1f, 0f });
 
-        //2 inputs, 3 neurons in the middle layer with tanh activation function, 1 output
+        //2 inputs, 3 neurons in the middle layer with tanh activation function, 1 output with linear activation function
         MLP nn = new(2, new int[] { 3, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Linear }); 
 
         //Train
@@ -180,7 +180,7 @@ public class NeuralNetworksExperiments
 
             foreach (Value param in nn.GetParameters())
             {
-                param.data += -0.1f * param.grad; //Gradient descent with 0.1 learning rate
+                param.data -= 0.1f * param.grad; //Gradient descent with 0.1 learning rate
             }
         }
 
@@ -325,11 +325,11 @@ public class NeuralNetworksExperiments
 
             foreach (Value weight in allWeights)
             {
-                weight.data += -learningRate * weight.grad;
+                weight.data -= learningRate * weight.grad;
             }
             foreach (Value bias in allBiases)
             {
-                bias.data += -learningRate * bias.grad;
+                bias.data -= learningRate * bias.grad;
             }
         }
 
