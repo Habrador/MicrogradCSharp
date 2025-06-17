@@ -60,7 +60,11 @@ A common "Hello World" example when making Neural Networks is the [XOR gate](htt
 | 1        | 0        | 1        |
 | 1        | 1        | 0        |
 
-The code for training and test such a neural network can be coded in as few lines as:
+The minimal Neural Network to learn this example has 2 inputs, 3 neurons in the middle layer, and 1 output. It also has 2 biases connected to the middle layer and the ouput layer. A bias always has input 1 and the bias's weight can be trained like the other weights in the network. It looks like this: 
+
+<img src="/_media/neural-network-2-3-1.jpg" width="400">
+
+The code for training and test such a Neural Network can be coded in as few lines as:
 
 ```csharp
 MicroMath.Random.Seed(0);
@@ -68,7 +72,7 @@ MicroMath.Random.Seed(0);
 Value[][] inputData = Value.Convert(new [] { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } });
 Value[] outputData = Value.Convert(new[] { 0f, 1f, 1f, 0f });
 
-//2 inputs, 3 neurons in the middle layer, 1 output, tanh transfer function
+//2 inputs, 3 neurons in the middle layer, 1 output, tanh activation function
 MLP nn = new(2, new int[] { 3, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Linear }); 
 
 //Train
@@ -99,7 +103,7 @@ for (int j = 0; j < inputData.Length; j++)
 }
 ```
 
-When I ran the neural network I got the following results:
+When I ran the Neural Network I got the following results:
 
 | Input 1  | Input  2 | Wanted   | Actual   |
 | ---------| -------- | -------- | -------- |
