@@ -28,18 +28,20 @@ public class NeuralNetworksExperiments
 
         //How fast/slow the network will learn
         float learningRate = 0.1f;
+        //How many times to go through all data when learning
+        int epochs = 100;
 
         //Create the NN
         //3 inputs, 4 neurons in two middle layers, 1 output
         MLP nn = new(3, new int[] { 4, 4, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Tanh, Value.AF.Tanh });
 
-        TrainNN(nn, learningRate, inputData, outputData);
+        TrainNN(nn, learningRate, epochs, inputData, outputData);
         TestNN(nn, inputData, outputData);
     }
 
 
 
-    //Train a Neural Network to understand the XOR gate
+    //Train a Neural Network to understand the XOR gate using tanh
     public void XOR_Gate_NN()
     {
         //Init seed so we get the same random numbers
@@ -55,25 +57,57 @@ public class NeuralNetworksExperiments
 
         //How fast/slow the network will learn
         float learningRate = 0.1f;
+        //How many times to go through all data when learning
+        int epochs = 100;
 
         //Create the NN
         //2 inputs, 3 neurons in the middle layer, 1 output
         //middle layer uses tanh transfer function, last layer uses linear transfer function
         MLP nn = new(2, new int[] { 3, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Linear });
 
-        TrainNN(nn, learningRate, inputData, outputData);
+        TrainNN(nn, learningRate, epochs, inputData, outputData);
+        TestNN(nn, inputData, outputData);
+    }
+
+
+
+    //Train a Neural Network to understand the XOR gate using Relu
+    public void XOR_Gate_NN_Relu()
+    {
+        //Init seed so we get the same random numbers
+        MicroMath.Random.Seed(1);
+
+        //Training data XOR
+        float[][] inputDataFloat = { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } };
+        float[] outputDataFloat = new[] { 0f, 1f, 1f, 0f };
+
+        //Convert training data from float to Value
+        Value[][] inputData = Value.Convert(inputDataFloat);
+        Value[] outputData = Value.Convert(outputDataFloat);
+
+        //How fast/slow the network will learn
+        float learningRate = 0.1f;
+
+        //How many times to go through all data when learning
+        int epochs = 500;
+
+        //Create the NN
+        //Output layer needs to have sigmoid af - linear doesnt work
+        MLP nn = new(2, new int[] { 4, 1 }, new Value.AF[] { Value.AF.Relu, Value.AF.Sigmoid });
+
+        TrainNN(nn, learningRate, epochs, inputData, outputData);
         TestNN(nn, inputData, outputData);
     }
 
 
 
     //Method for training a Neural Network
-    private void TrainNN(MLP nn, float learningRate, Value[][] inputData, Value[] outputData)
+    private void TrainNN(MLP nn, float learningRate, int epochs, Value[][] inputData, Value[] outputData)
     {
         //Train
         Debug.Log("Training!");
 
-        for (int i = 0; i <= 100; i++)
+        for (int i = 0; i <= epochs; i++)
         {
             //Forward pass
 
@@ -104,7 +138,7 @@ public class NeuralNetworksExperiments
                 loss += errorSquare;
             }
 
-            //Divide loss with batch size
+            //Divide loss with batch size which is only needed if we have batches of different sizes?
 
             if (i % 10 == 0)
             {
@@ -123,9 +157,6 @@ public class NeuralNetworksExperiments
 
             foreach (Value param in parameters)
             {
-                //Learning rate decay
-                //learningRate = 1f - 0.9f * i / (float)100;
-
                 param.data -= learningRate * param.grad;
             }
         }
@@ -178,7 +209,7 @@ public class NeuralNetworksExperiments
             nn.ZeroGrad();
             loss.Backward(); //The notorious backpropagation
 
-            foreach (Value param in nn.GetParameters())
+            foreach (Value param in nn.GetParameters()) //Update weights and biases
             {
                 param.data -= 0.1f * param.grad; //Gradient descent with 0.1 learning rate
             }

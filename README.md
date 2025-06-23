@@ -90,7 +90,7 @@ for (int i = 0; i <= 100; i++)
     nn.ZeroGrad();
     loss.Backward(); //The notorious backpropagation
 
-    foreach (Value param in nn.GetParameters())
+    foreach (Value param in nn.GetParameters()) //Update weights and biases
     {
         param.data -= 0.1f * param.grad; //Gradient descent with 0.1 learning rate
     }
