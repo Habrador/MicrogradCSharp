@@ -93,7 +93,7 @@ public class NeuralNetworksExperiments
 
         //Create the NN
         //Output layer needs to have sigmoid af - linear doesnt work
-        MLP nn = new(2, new int[] { 4, 1 }, new Value.AF[] { Value.AF.Relu, Value.AF.Sigmoid });
+        MLP nn = new(2, new int[] { 8, 1 }, new Value.AF[] { Value.AF.Relu, Value.AF.Sigmoid });
 
         TrainNN(nn, learningRate, epochs, inputData, outputData);
         TestNN(nn, inputData, outputData);
