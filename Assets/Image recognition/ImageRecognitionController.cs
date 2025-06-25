@@ -29,7 +29,11 @@ public class ImageRecognitionController : MonoBehaviour
         Debug.Log(trainingDataStringArray[0]);
         Debug.Log(trainingDataStringArray.Length);
 
-        ProcessData.GetData(trainingDataStringArray, out float[][] inputTrainingDataFloat, out int[] labels);
+        //Make the data easier to manipulate
+        ProcessData.FromRaw(trainingDataStringArray, out float[][] inputTrainingDataFloat, out int[] labels);
+
+        //Make the neural network understand the data
+        Value[][] preprocessedTrainingInputData = ProcessData.ForNN(inputTrainingDataFloat);
 
         //Display the data on a quad
         int displayIndex = 6;
@@ -37,8 +41,6 @@ public class ImageRecognitionController : MonoBehaviour
         Display.DisplayDigitOnQuad(inputTrainingDataFloat[displayIndex], displayQuadObj);
 
         Debug.Log(labels[displayIndex]);
-
-        Value[][] preprocessedTrainingInputData = ProcessData.PreprocessData(inputTrainingDataFloat);
 
 
 
@@ -58,7 +60,6 @@ public class ImageRecognitionController : MonoBehaviour
 
 
         //Create the NN
-        //Output layer needs to have sigmoid af - linear doesnt work
         MLP nn = new(784, new int[] { 8, 10 }, new Value.AF[] { Value.AF.Relu, Value.AF.Sigmoid });
 
         NeuralNetworkTrainer nnTrainer = new();
@@ -74,9 +75,9 @@ public class ImageRecognitionController : MonoBehaviour
         //Debug.Log(trainingDataStringArray[0]);
         //Debug.Log(trainingDataStringArray.Length);
 
-        ProcessData.GetData(trainingDataStringArray, out float[][] testInputDataFloat, out int[] testLabels);
+        ProcessData.FromRaw(trainingDataStringArray, out float[][] testInputDataFloat, out int[] testLabels);
 
-        Value[][] preprocessedTestInputData = ProcessData.PreprocessData(testInputDataFloat);
+        Value[][] preprocessedTestInputData = ProcessData.ForNN(testInputDataFloat);
 
         nnTrainer.Test(nn, preprocessedTestInputData, testLabels);
     }

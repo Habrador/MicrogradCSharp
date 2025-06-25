@@ -8,7 +8,7 @@ using UnityEngine;
 
 public static class ProcessData
 {
-    public static Value[][] PreprocessData(float[][] data)
+    public static Value[][] ForNN(float[][] data)
     {
         //Normalize input data
         //Cant do that in GetData because we might not know the max and min values
@@ -56,7 +56,7 @@ public static class ProcessData
 
 
     //Standardize the data from the raw file
-    public static void GetData(string[] dataStringArray, out float[][] pixels, out int[] labels)
+    public static void FromRaw(string[] dataStringArray, out float[][] pixels, out int[] labels)
     {
         pixels = new float[dataStringArray.Length][];
         labels = new int[dataStringArray.Length];
