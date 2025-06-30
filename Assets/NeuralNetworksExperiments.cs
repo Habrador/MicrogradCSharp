@@ -92,8 +92,12 @@ public class NeuralNetworksExperiments
         int epochs = 500;
 
         //Create the NN
+        MLP nn = new(2);
+
+        //Add layers
+        nn.AddLayer(8, Value.AF.Relu);
         //Output layer needs to have sigmoid af - linear doesnt work
-        MLP nn = new(2, new int[] { 8, 1 }, new Value.AF[] { Value.AF.Relu, Value.AF.Sigmoid });
+        nn.AddLayer(1, Value.AF.Sigmoid);
 
         TrainNN(nn, learningRate, epochs, inputData, outputData);
         TestNN(nn, inputData, outputData);

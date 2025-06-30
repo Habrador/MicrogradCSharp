@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 
@@ -9,9 +10,10 @@ namespace Micrograd
     public class MLP : Module
     {
         //How many neurons are there in a layer?
-        private readonly int[] size;
+        //Do we need size array?
+        private readonly List<int> size;
 
-        private readonly Layer[] layers;
+        private readonly List<Layer> layers;
 
 
 
@@ -19,12 +21,29 @@ namespace Micrograd
         public MLP(int nin, int[] nouts, Value.AF[] afs) 
         { 
             //{2, 3, 1}
-            size = new List<int> { nin }.Concat(nouts).ToArray();
+            size = new List<int> { nin }.Concat(nouts).ToList();
 
             //nouts.Length = 2
             //i = 0 -> size[0] = 2, nout = 3
             //i = 1 -> size[1] = 3, nout = 1 
-            layers = nouts.Select((nout, i) => new Layer(size[i], nout, afs[i])).ToArray();
+            layers = nouts.Select((nout, i) => new Layer(size[i], nout, afs[i])).ToList();
+        }
+
+        //Init with a single input, then add layers using AddLayer()
+        public MLP(int nin)
+        {
+            size = new() { nin };
+            layers = new();
+        }
+
+
+
+        //Add a layer to the NN
+        public void AddLayer(int neurons, Value.AF af)
+        {
+            layers.Add(new Layer(size[^1], neurons, af));
+
+            size.Add(neurons);
         }
 
 
