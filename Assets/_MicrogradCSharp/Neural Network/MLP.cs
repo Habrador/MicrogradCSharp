@@ -29,7 +29,7 @@ namespace Micrograd
             layers = nouts.Select((nout, i) => new Layer(size[i], nout, afs[i])).ToList();
         }
 
-        //Init with a single input, then add layers using AddLayer()
+        //Init with how many inputs there are to rthe nn, then add layers using AddLayer()
         public MLP(int nin)
         {
             size = new() { nin };

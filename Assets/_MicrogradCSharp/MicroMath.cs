@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 namespace Micrograd
 {
     //Useful math for neural networks
@@ -17,6 +18,15 @@ namespace Micrograd
 
         //Log(x)
         public static float Log(float x) => (float)System.Math.Log(x);
+
+        //Cos(x)
+        public static float Cos(float x) => (float)System.Math.Cos(x);
+
+        //Sin(x)
+        public static float Sin(float x) => (float)System.Math.Sin(x);
+
+        //Sign(x)
+        public static int Sign(float x) => System.Math.Sign(x);
 
 
 
@@ -80,6 +90,12 @@ namespace Micrograd
 
             //Float [low, < high]
             public static float Uniform(float low, float high) => (float)rng.NextDouble() * (high - low) + low;
+
+            //Float 0 -> 1
+            public static float Uniform01 => Uniform(0f, 1f);
+
+            //Integer
+            public static int RandInt(int low, int high) => rng.Next(low, high);
         }
     }
 }
