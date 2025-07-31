@@ -166,7 +166,7 @@ namespace Micrograd
         public static Value operator /(Value A, Value B) => AutogradDivide(A, B);
 
         // A / b
-        public static Value operator /(Value A, float b) => AutogradDivide(A, new Value(b));
+        public static Value operator /(Value A, float b) => AutogradDivide(A, new(b));
 
         // a / B
         public static Value operator /(float a, Value B) => AutogradDivide(new(a), B);
@@ -293,7 +293,24 @@ namespace Micrograd
 
             return output;
         }
-          
+
+        //Log(x) - natural base
+        public Value Log()
+        {
+            float x = this.data;
+
+            float log = MicroMath.Log(x);
+
+            Value output = new(log, this, null);
+
+            output.backwardOneStep = () =>
+            {
+                this.grad += (1 / x) * output.grad;
+            };
+
+            return output;
+        }
+
 
 
         //
