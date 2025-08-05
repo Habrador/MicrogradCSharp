@@ -36,6 +36,9 @@ namespace Micrograd
             //This is the random number generator
             private static System.Random rng = new(0);
 
+            //Get the rng because sometimes we need to inject it
+            public static System.Random GetGenerator => rng;
+
             //Init the random number generator with a seed so we can get the same "random" numbers
             public static void Seed(int seed)
             {
