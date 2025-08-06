@@ -130,17 +130,7 @@ public class NeuralNetworksExperiments
             }
 
             //Error calculations using MSE
-            Value loss = new(0f);
-
-            for (int j = 0; j < networkOutputs.Length; j++)
-            {
-                Value wantedOutput = outputData[j];
-                Value actualOutput = networkOutputs[j];
-
-                Value errorSquare = Value.Pow(actualOutput - wantedOutput, 2f);
-
-                loss += errorSquare;
-            }
+            Value loss = MeanSquaredError.Forward(networkOutputs, outputData);
 
             //Divide loss with batch size which is only needed if we have batches of different sizes?
 
