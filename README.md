@@ -115,6 +115,22 @@ When I ran the Neural Network I got the following results:
 The outputs are very close to the 0 and 1 we wanted - the output will never be exactly 0 or 1. 
 
 
+## Implementations
+
+Activation Functions:
+
+* Tanh
+* Relu
+* Sigmoid
+* Linear
+* Softmax
+
+Loss functions:
+
+* Categorical Cross-Entropy (Negative Log-Likelihood (NLL))
+* Mean Squared Error (MSE)
+
+
 ## Learn more
 
 This project was inspired by by Andrej Karpathy's Micrograd for Python GitHub project [micrograd](https://github.com/karpathy/micrograd) and YouTube video [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0). They are great sources if you want to learn more what's going on behind the scenes. 
