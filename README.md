@@ -117,7 +117,7 @@ The outputs are very close to the 0 and 1 we wanted - the output will never be e
 
 ## Implementations
 
-Activation Functions:
+Activation functions:
 
 * Tanh
 * Relu
