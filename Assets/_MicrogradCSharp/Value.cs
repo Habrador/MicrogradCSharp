@@ -332,16 +332,30 @@ namespace Micrograd
             return output;
         }
 
-        //Implicit conversion to float: (float)valueObj instead of valueObj.data 
-        //public static implicit operator float(Value a)
-        //{
-        //    return a.data;
-        //}
 
-        ////Implicit conversion from float to Value
-        //public static implicit operator Value(float a)
-        //{
-        //    return new Value(a);
-        //}
+
+        //
+        // Argmax
+        //
+
+        //The index with highest value
+        public static int Argmax(Value[] a)
+        {
+            int maxIndex = 0;
+            float maxValue = -float.MaxValue;
+
+            for (int j = 0; j < a.Length; j++)
+            {
+                float value = a[j].data;
+
+                if (value > maxValue)
+                {
+                    maxIndex = j;
+                    maxValue = value;
+                }
+            }
+
+            return maxIndex;
+        }
     }
 }
