@@ -332,6 +332,32 @@ namespace Micrograd
             return output;
         }
 
+        //int telling us which index should be one-hot -> one-hot encoded value with 0s and a 1
+        public static Value[][] ToOneHotEncoding(int[] oneHotIndices, int dimensions)
+        {
+            Value[][] oneHotEncoded = new Value[oneHotIndices.Length][];
+
+            for (int row = 0; row < oneHotIndices.Length; row++)
+            {
+                Value[] thisRow = new Value[dimensions];
+
+                //Add 0s
+                for (int col = 0; col < dimensions; col++)
+                {
+                    thisRow[col] = new Value(0f);
+                }
+
+                //Add the 1
+                int oneHotIndex = oneHotIndices[row];
+
+                thisRow[oneHotIndex] = new Value(1f);
+
+                oneHotEncoded[row] = thisRow;
+            }
+
+            return oneHotEncoded;
+        }
+
 
 
         //
