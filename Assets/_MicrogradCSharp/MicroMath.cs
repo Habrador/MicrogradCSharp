@@ -28,6 +28,9 @@ namespace Micrograd
         //Sign(x)
         public static int Sign(float x) => System.Math.Sign(x);
 
+        //Clamp to min max range
+        public static float Clamp(float value, float min, float max) => System.Math.Clamp(value, min, max);
+
 
 
         //Need a nested class to write Math.Random.Something like in Numpy
