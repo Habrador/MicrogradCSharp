@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ValueExperiments
+public class ValueExamples
 {
     //Test example from the micrograd github repo https://github.com/karpathy/micrograd
     public void TestGradients()

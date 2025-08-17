@@ -5,21 +5,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//Run experiments here!
-public class Experiments : MonoBehaviour
+//Run the different examples here!
+public class Examples : MonoBehaviour
 {
     private void Start()
     {
         //ValueExperiments();
 
-        NeuralNetworkExperiments();
+        NeuralNetworkExamples();
     }
 
 
     private void ValueExperiments()
     {
         //Value examples
-        ValueExperiments valueTest = new();
+        ValueExamples valueTest = new();
 
         //valueTest.TestGradients();
 
@@ -28,7 +28,7 @@ public class Experiments : MonoBehaviour
         //valueTest.BasicNeuron();
     }
 
-    private void NeuralNetworkExperiments()
+    private void NeuralNetworkExamples()
     {
         //NN learning the XOR gate in as few line sof code as possible
         NN_XOR_Minimal nn_xor_minimal = new();
