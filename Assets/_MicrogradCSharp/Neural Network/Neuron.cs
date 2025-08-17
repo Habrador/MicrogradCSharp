@@ -62,7 +62,14 @@ namespace Micrograd
         //Get an array with all weights and the bias
         public override Value[] Parameters()
         {
-            return new List<Value> { b }.Concat(w).ToArray();
+            if (useBias)
+            {
+                return new List<Value> { b }.Concat(w).ToArray();
+            }
+            else
+            {
+                return w;
+            }
         }
     }
 }
