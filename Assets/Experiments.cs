@@ -35,12 +35,12 @@ public class Experiments : MonoBehaviour
 
         //nn.XOR_Gate_Just_Values();
 
-        //nn.XOR_Gate_NN();
+        nn.XOR_Gate_NN();
 
         //nn.XOR_Gate_Minimal();
 
         //nn.YouTube_Example();
 
-        nn.XOR_Gate_NN_Relu();
+        //nn.XOR_Gate_NN_Relu();
     }
 }

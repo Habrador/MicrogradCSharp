@@ -60,7 +60,12 @@ public class ImageRecognitionController : MonoBehaviour
 
 
         //Create the NN
-        MLP nn = new(784, new int[] { 8, 10 }, new Value.AF[] { Value.AF.Relu, Value.AF.Sigmoid });
+        MLP nn = new();
+
+        nn.AddLayer(nn.Linear(784, 8));
+        nn.AddLayer(nn.ReLU());
+        nn.AddLayer(nn.Linear(8, 10));
+        nn.AddLayer(nn.Sigmoid());
 
         NeuralNetworkTrainer nnTrainer = new();
 

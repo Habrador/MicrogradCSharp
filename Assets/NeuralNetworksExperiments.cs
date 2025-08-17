@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class NeuralNetworksExperiments
 {
@@ -33,7 +35,14 @@ public class NeuralNetworksExperiments
 
         //Create the NN
         //3 inputs, 4 neurons in two middle layers, 1 output
-        MLP nn = new(3, new int[] { 4, 4, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Tanh, Value.AF.Tanh });
+        MLP nn = new();
+
+        nn.AddLayer(nn.Linear(3, 4));
+        nn.AddLayer(nn.Tanh());
+        nn.AddLayer(nn.Linear(4, 4));
+        nn.AddLayer(nn.Tanh());
+        nn.AddLayer(nn.Linear(4, 1));
+        nn.AddLayer(nn.Tanh());
 
         TrainNN(nn, learningRate, epochs, inputData, outputData);
         TestNN(nn, inputData, outputData);
@@ -61,9 +70,14 @@ public class NeuralNetworksExperiments
         int epochs = 100;
 
         //Create the NN
+        MLP nn = new();
+
+        //Add layers
         //2 inputs, 3 neurons in the middle layer, 1 output
-        //middle layer uses tanh transfer function, last layer uses linear transfer function
-        MLP nn = new(2, new int[] { 3, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Linear });
+        //middle layer uses tanh transfer function, last layer uses no transfer function
+        nn.AddLayer(nn.Linear(2, 3, useBias: true));
+        nn.AddLayer(nn.Tanh());
+        nn.AddLayer(nn.Linear(3, 1, useBias: true));
 
         TrainNN(nn, learningRate, epochs, inputData, outputData);
         TestNN(nn, inputData, outputData);
@@ -92,12 +106,14 @@ public class NeuralNetworksExperiments
         int epochs = 500;
 
         //Create the NN
-        MLP nn = new(2);
+        MLP nn = new();
 
         //Add layers
-        nn.AddLayer(8, Value.AF.Relu);
-        //Output layer needs to have sigmoid af - linear doesnt work
-        nn.AddLayer(1, Value.AF.Sigmoid);
+        nn.AddLayer(nn.Linear(2, 8));
+        nn.AddLayer(nn.ReLU());
+        nn.AddLayer(nn.Linear(8, 1));
+        //Output layer needs to have sigmoid af -linear doesnt work
+        nn.AddLayer(nn.Sigmoid());
 
         TrainNN(nn, learningRate, epochs, inputData, outputData);
         TestNN(nn, inputData, outputData);
@@ -185,8 +201,12 @@ public class NeuralNetworksExperiments
         Value[][] inputData = Value.Convert(new [] { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } });
         Value[] outputData = Value.Convert(new[] { 0f, 1f, 1f, 0f });
 
-        //2 inputs, 3 neurons in the middle layer with tanh activation function, 1 output with linear activation function
-        MLP nn = new(2, new int[] { 3, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Linear }); 
+        //Create the NN
+        MLP nn = new();
+
+        //Add layer
+        //2 inputs, 3 neurons in the middle layer with tanh activation function, 1 output with no activation function
+        nn.AddLayers(nn.Linear(2, 3), nn.Tanh(), nn.Linear(3, 1));
 
         //Train
         for (int i = 0; i <= 100; i++)

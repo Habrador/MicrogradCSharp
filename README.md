@@ -49,6 +49,49 @@ Debug.Log("Expected: 645.5773, Actual: " + b.grad);
 ```
 
 
+## Implementations
+
+Activation functions:
+
+* Tanh
+* Relu
+* Sigmoid
+* Softmax
+
+Loss functions:
+
+* Categorical Cross-Entropy (Negative Log-Likelihood (NLL))
+* Mean Squared Error (MSE)
+
+
+## How to create a Neural Network?
+
+You can create it layer-by-layer:
+
+```csharp
+//Create the NN
+MLP nn = new();
+
+//Add layers
+//2 inputs, 3 neurons in the middle layer with tanh activation function, 1 output with no activation function
+nn.AddLayer(nn.Linear(2, 3));
+nn.AddLayer(nn.Tanh());
+nn.AddLayer(nn.Linear(3, 1));
+```
+
+
+..or in one go:
+
+```csharp
+//Create the NN
+MLP nn = new();
+
+//Add layers
+//2 inputs, 3 neurons in the middle layer with tanh activation function, 1 output with no activation function
+nn.AddLayers(nn.Linear(2, 3), nn.Tanh(), nn.Linear(3, 1));
+```
+
+
 ## Example usage of Neural Network library
 
 A common "Hello World" example when making Neural Networks is the [XOR gate](https://en.wikipedia.org/wiki/XOR_gate). You want to create a Neural Network that understands the following:
@@ -72,8 +115,10 @@ MicroMath.Random.Seed(0);
 Value[][] inputData = Value.Convert(new [] { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } });
 Value[] outputData = Value.Convert(new[] { 0f, 1f, 1f, 0f });
 
-//2 inputs, 3 neurons in the middle layer with tanh activation function, 1 output with linear activation function
-MLP nn = new(2, new int[] { 3, 1 }, new Value.AF[] { Value.AF.Tanh, Value.AF.Linear }); 
+MLP nn = new();
+
+//2 inputs, 3 neurons in the middle layer with tanh activation function, 1 output with no activation function
+nn.AddLayers(nn.Linear(2, 3), nn.Tanh(), nn.Linear(3, 1)); 
 
 //Train
 for (int i = 0; i <= 100; i++)
@@ -113,22 +158,6 @@ When I ran the Neural Network I got the following results:
 | 1        | 1        | 0        | -0,01677 |
 
 The outputs are very close to the 0 and 1 we wanted - the output will never be exactly 0 or 1. 
-
-
-## Implementations
-
-Activation functions:
-
-* Tanh
-* Relu
-* Sigmoid
-* Linear
-* Softmax
-
-Loss functions:
-
-* Categorical Cross-Entropy (Negative Log-Likelihood (NLL))
-* Mean Squared Error (MSE)
 
 
 ## Learn more

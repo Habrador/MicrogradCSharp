@@ -9,41 +9,41 @@ namespace Micrograd
     //MLP = MultiLayer perceptron which is a Feedforward Neural Network
     public class MLP : Module
     {
-        //How many neurons are there in a layer?
-        //Do we need size array?
-        private readonly List<int> size;
-
         private readonly List<Layer> layers;
 
+        //The layers we can add
+
+        //Linear applies a linear transformation on the input using its stored weights and biases
+        public Linear Linear(int neuronsPrev, int neuronsThis, bool useBias = true) => new(neuronsPrev, neuronsThis, useBias);
+
+        //Layers that are activation functions
+        public Sigmoid Sigmoid() => new();
+        public Tanh Tanh() => new();
+        public ReLU ReLU() => new();
+        public Softmax Softmax() => new();
 
 
-        //Ex. 2-3-1 -> nin = 2 nouts = {3, 1}
-        public MLP(int nin, int[] nouts, Value.AF[] afs) 
-        { 
-            //{2, 3, 1}
-            size = new List<int> { nin }.Concat(nouts).ToList();
 
-            //nouts.Length = 2
-            //i = 0 -> size[0] = 2, nout = 3
-            //i = 1 -> size[1] = 3, nout = 1 
-            layers = nouts.Select((nout, i) => new Layer(size[i], nout, afs[i])).ToList();
-        }
-
-        //Init with how many inputs there are to rthe nn, then add layers using AddLayer()
-        public MLP(int nin)
+        public MLP()
         {
-            size = new() { nin };
             layers = new();
         }
 
 
 
-        //Add a layer to the NN
-        public void AddLayer(int neurons, Value.AF af)
+        //Add multiple layers to the NN
+        public void AddLayers(params Layer[] layersToAdd)
         {
-            layers.Add(new Layer(size[^1], neurons, af));
+            foreach (Layer layer in layersToAdd)
+            {
+                layers.Add(layer);
+            }
+        }
 
-            size.Add(neurons);
+        //Add a layer to the NN
+        public void AddLayer(Layer layer)
+        {
+            layers.Add(layer);
         }
 
 
@@ -69,11 +69,17 @@ namespace Micrograd
 
             foreach (Layer layer in layers)
             {
+                //All layers dont have weights or biases
+                if (layer.Parameters() == null)
+                {
+                    continue;
+                }
+
                 parametersList.AddRange(layer.Parameters());
             }
 
             Value[] parameters = parametersList.ToArray();
-            
+
             return parameters;
         }
     }

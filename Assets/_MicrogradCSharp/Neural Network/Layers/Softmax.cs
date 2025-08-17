@@ -5,9 +5,9 @@ using UnityEngine.Windows;
 
 namespace Micrograd
 {
-    public class Softmax 
+    public class Softmax : Layer
     {
-        public static Value[] Activate(Value[] x)
+        public override Value[] Activate(Value[] x)
         {
             //We say the output from the network are the logits (log counts)
             Value[] output = x;
