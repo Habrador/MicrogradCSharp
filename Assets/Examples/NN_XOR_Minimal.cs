@@ -1,0 +1,50 @@
+using Micrograd;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+//Neural Network that learns the XOR gate in as few lines of code as possible
+public class NN_XOR_Minimal
+{
+    public NN_XOR_Minimal()
+    {
+        MicroMath.Random.Seed(0);
+
+        Value[][] inputData = Value.Convert(new[] { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } });
+        Value[] outputData = Value.Convert(new[] { 0f, 1f, 1f, 0f });
+
+        //Create the NN
+        MLP nn = new();
+
+        //Add layer
+        //2 inputs, 3 neurons in the middle layer with tanh activation function, 1 output with no activation function
+        nn.AddLayers(nn.Linear(2, 3), nn.Tanh(), nn.Linear(3, 1));
+
+        //Train
+        for (int i = 0; i <= 100; i++)
+        {
+            Value loss = new(0f);
+
+            for (int j = 0; j < inputData.Length; j++)
+            {
+                loss += Value.Pow(nn.Activate(inputData[j])[0] - outputData[j], 2f); //MSE loss function
+            }
+
+            Debug.Log($"Iteration: {i}, Network error: {loss.data}");
+
+            nn.ZeroGrad();
+            loss.Backward(); //The notorious backpropagation
+
+            foreach (Value param in nn.GetParameters()) //Update weights and biases
+            {
+                param.data -= 0.1f * param.grad; //Gradient descent with 0.1 learning rate
+            }
+        }
+
+        //Test
+        for (int j = 0; j < inputData.Length; j++)
+        {
+            Debug.Log("Wanted: " + outputData[j].data + ", Actual: " + nn.Activate(inputData[j])[0].data);
+        }
+    }
+}

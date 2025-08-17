@@ -30,17 +30,24 @@ public class Experiments : MonoBehaviour
 
     private void NeuralNetworkExperiments()
     {
-        //Neural Network examples
-        NeuralNetworksExperiments nn = new();
+        //NN learning the XOR gate in as few line sof code as possible
+        NN_XOR_Minimal nn_xor_minimal = new();
+    
 
-        //nn.XOR_Gate_Just_Values();
+        //NN learning the XOR by using just Values - not the NN library
+        //XOR_Gate_Just_Values nn = new();
 
-        nn.XOR_Gate_NN();
 
-        //nn.XOR_Gate_Minimal();
+        //Various NN doing regression
+        NN_Regression nn_regression = new();
 
-        //nn.YouTube_Example();
+        //Example from Andrej Karpathy's video
+        //nn_regression.YouTube_Example();
 
-        //nn.XOR_Gate_NN_Relu();
+        //XOR gate using tanh 
+        //nn_regression.XOR_Gate_NN();
+
+        //XOR gate using Relu 
+        //nn_regression.XOR_Gate_NN_Relu();
     }
 }
