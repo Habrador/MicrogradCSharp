@@ -41,7 +41,7 @@ namespace Micrograd
 
         public virtual Value[] Parameters()
         {
-            UnityEngine.Debug.Log("Got parameters from Module");
+            //UnityEngine.Debug.Log("Got parameters from Module");
         
             return null;
         }

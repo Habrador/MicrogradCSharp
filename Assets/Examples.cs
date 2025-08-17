@@ -31,7 +31,7 @@ public class Examples : MonoBehaviour
     private void NeuralNetworkExamples()
     {
         //NN learning the XOR gate in as few line sof code as possible
-        NN_XOR_Minimal nn_xor_minimal = new();
+        //NN_XOR_Minimal nn_xor_minimal = new();
     
 
         //NN learning the XOR by using just Values - not the NN library
@@ -49,5 +49,9 @@ public class Examples : MonoBehaviour
 
         //XOR gate using Relu 
         //nn_regression.XOR_Gate_NN_Relu();
+
+
+        //NN learning to predict the next character in the alphabet
+        NN_Alphabet alphabet = new();
     }
 }
