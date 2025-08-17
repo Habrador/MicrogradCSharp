@@ -27,8 +27,11 @@ namespace Micrograd
             //Random normal distributed weights which is common in Neural Networks
             w = w.Select(item => new Value(MicroMath.Random.Normal())).ToArray();
 
-            //Init the bias with zero which is common in Neural Networks
-            b = new(0f);
+            if (useBias)
+            {
+                //Init the bias with zero which is common in Neural Networks
+                b = new(0f);
+            }
 
             this.useBias = useBias;
         }
