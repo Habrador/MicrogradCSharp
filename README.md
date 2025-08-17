@@ -80,7 +80,7 @@ nn.AddLayer(nn.Linear(3, 1));
 ```
 
 
-..or in one go:
+...or in one go:
 
 ```csharp
 //Create the NN
