@@ -7,7 +7,6 @@ using System.Linq;
 namespace Micrograd
 {
     //A single neuron in a neural network
-    //Is using tanh activation function
     public class Neuron : Module
     {
         //All weights going to this neuron
