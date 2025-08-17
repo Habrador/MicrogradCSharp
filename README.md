@@ -25,11 +25,11 @@ Loss functions:
 Neural Networks:
 
 * Regression:
-	* XOR gate using regression
+	* XOR gate
 	* Some example Andrej Karpathy used
 
 * Classification:
-	* Predict the next character in the alphabet
+	* Predict the next character in the alphabet given a character
 
 
 ## How to create a Neural Network?
