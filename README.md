@@ -8,47 +8,6 @@ This library provides a lightweight, efficient, and simple way to build and trai
 > We all saw in Terminator what can happen if you experiment too much with Artifical Intelligence, please be careful.  
 
 
-## Example usage of Value class
-
-The idea of scalar-valued automatic differentiation (autograd) engine is to make it easy to find derivatives. If you do some math using the Value class you can find derivatives by typing .Backward(); which is useful when you start experimenting with Neural Networks and encounter Backpropagation.  
-
-```csharp
-Value a = new(-4.0f);
-
-Value b = new(2.0f);
-
-Value c = a + b;
-
-Value d = a * b + Value.Pow(b, 3f);
-
-c += c + 1f;
-
-c += 1f + c + (-a);
-
-d += d * 2f + (b + a).Relu();
-
-d += 3f * d + (b - a).Relu();
-
-Value e = c - d;
-
-Value f = Value.Pow(e, 2f);
-
-Value g = f / 2.0f;
-
-g += 10.0f / f;
-
-Debug.Log("Expected: 24.7041, Actual: " + g.data);
-
-g.Backward();
-
-//dg/da
-Debug.Log("Expected: 138.8338, Actual: " + a.grad);
-
-//dg/db
-Debug.Log("Expected: 645.5773, Actual: " + b.grad);
-```
-
-
 ## Implementations
 
 Activation functions:
@@ -62,6 +21,15 @@ Loss functions:
 
 * Categorical Cross-Entropy (Negative Log-Likelihood (NLL))
 * Mean Squared Error (MSE)
+
+Neural Networks:
+
+* Regression:
+	* XOR gate using regression
+	* Some example Andrej Karpathy used
+
+* Classification:
+	* Predict the next character in the alphabet
 
 
 ## How to create a Neural Network?
@@ -158,6 +126,47 @@ When I ran the Neural Network I got the following results:
 | 1        | 1        | 0        | -0,01677 |
 
 The outputs are very close to the 0 and 1 we wanted - the output will never be exactly 0 or 1. 
+
+
+## Example usage of Value class
+
+The idea of scalar-valued automatic differentiation (autograd) engine is to make it easy to find derivatives. If you do some math using the Value class you can find derivatives by typing .Backward(); which is useful when you start experimenting with Neural Networks and encounter Backpropagation.  
+
+```csharp
+Value a = new(-4.0f);
+
+Value b = new(2.0f);
+
+Value c = a + b;
+
+Value d = a * b + Value.Pow(b, 3f);
+
+c += c + 1f;
+
+c += 1f + c + (-a);
+
+d += d * 2f + (b + a).Relu();
+
+d += 3f * d + (b - a).Relu();
+
+Value e = c - d;
+
+Value f = Value.Pow(e, 2f);
+
+Value g = f / 2.0f;
+
+g += 10.0f / f;
+
+Debug.Log("Expected: 24.7041, Actual: " + g.data);
+
+g.Backward();
+
+//dg/da
+Debug.Log("Expected: 138.8338, Actual: " + a.grad);
+
+//dg/db
+Debug.Log("Expected: 645.5773, Actual: " + b.grad);
+```
 
 
 ## Learn more
