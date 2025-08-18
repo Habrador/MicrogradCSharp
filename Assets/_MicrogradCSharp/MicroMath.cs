@@ -31,6 +31,9 @@ namespace Micrograd
         //Clamp to min max range
         public static float Clamp(float value, float min, float max) => System.Math.Clamp(value, min, max);
 
+        //PI
+        public static float PI => (float)System.Math.PI;
+
 
 
         //Need a nested class to write Math.Random.Something like in Numpy
@@ -49,44 +52,28 @@ namespace Micrograd
             }
 
 
-          
+
             //
             // Generate normally distributed numbers (gaussians)
             //
 
+            //The Box-Muller transform converts uniformly distributed random numbers into normally distributed ones
+            //https://stackoverflow.com/questions/218060/random-gaussian-variables
+            public static float GetRandomGaussian(float mean, float stdDev)
+            {
+                float u1 = 1f - Uniform01;
+                float u2 = 1f - Uniform01;
+
+                //random normal(0,1)
+                float randStdNormal = MicroMath.Sqrt(-2f * MicroMath.Log(u1)) * MicroMath.Sin(2f * MicroMath.PI * u2);
+
+                //random normal(mean,stdDev^2)
+                float randNormal = mean + stdDev * randStdNormal;
+                
+                return randNormal;
+            }
+
             public static float Normal(float mean = 0f, float std = 1f) => GetRandomGaussian(mean, std);
-
-            //Generate two normally distributed numbers
-            public static void GetRandomGaussian(float mean, float standardDeviation, out float val1, out float val2)
-            {
-                float u, v, s, t;
-                
-                do
-                {
-                    //Generate two random numbers with uniform distribution
-                    u = Uniform(-1f, 1f);
-                    v = Uniform(-1f, 1f);
-                }
-                //The numbers have to be within the unit disc and they can't be at the center
-                while (u * u + v * v > 1f || (u == 0f && v == 0f));
-
-                //The square of the radius
-                s = u * u + v * v;
-                
-                t = MicroMath.Sqrt((-2f * MicroMath.Log(s)) / s);
-
-                val1 = standardDeviation * u * t + mean;
-                val2 = standardDeviation * v * t + mean;
-            }
-
-            //Generate one normally distributed number
-            public static float GetRandomGaussian(float mean = 0f, float standardDeviation = 1f)
-            {
-                GetRandomGaussian(mean, standardDeviation, out float rVal1, out _);
-
-                //Just pick one of them
-                return rVal1;
-            }
 
 
 

@@ -10,7 +10,7 @@ public class NN_Regression
     public void YouTube_Example()
     {
         //Init seed so we get the same random numbers
-        MicroMath.Random.Seed(0);
+        MicroMath.Random.Seed(1);
 
         //Training data 
         float[][] inputDataFloat = {

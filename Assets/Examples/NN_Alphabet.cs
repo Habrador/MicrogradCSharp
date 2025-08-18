@@ -61,7 +61,7 @@ public class NN_Alphabet
         // Init the NN
         //
 
-        MicroMath.Random.Seed(0);
+        MicroMath.Random.Seed(2);
 
         System.Random rng = Micrograd.MicroMath.Random.GetGenerator;
 
