@@ -147,9 +147,6 @@ public class NN_Regression : MonoBehaviour
                 //Run input through the network
                 Value[] outputArray = nn.Activate(inputData[inputDataIndex]);
 
-                //We know we have just a single output
-                //Value output = outputArray[0];
-
                 networkOutputs[inputDataIndex] = outputArray;
             }
 
