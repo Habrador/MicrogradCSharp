@@ -4,9 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Neural Network that learns the XOR gate in as few lines of code as possible
-public class NN_XOR_Minimal
+public class NN_XOR_Minimal : MonoBehaviour
 {
-    public NN_XOR_Minimal()
+    private void Start()
+    {
+        Generate();
+    }
+
+
+
+    private void Generate()
     {
         MicroMath.Random.Seed(0);
 

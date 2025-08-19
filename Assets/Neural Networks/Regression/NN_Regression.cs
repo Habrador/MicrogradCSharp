@@ -4,8 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Neural Networks doing regression
-public class NN_Regression
+public class NN_Regression : MonoBehaviour
 {
+    private void Start()
+    {
+        YouTube_Example();
+
+        //XOR_Gate_NN();
+    }
+
+
+
     //Test network example from the YT video "The spelled-out intro to neural networks and backpropagation: building micrograd"
     public void YouTube_Example()
     {

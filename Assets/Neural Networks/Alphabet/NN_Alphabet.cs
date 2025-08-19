@@ -9,9 +9,16 @@ using UnityEngine;
 //Uses classification so Softmax activation function in output layer
 //Based on Andrej Karpathy's makemore YouTube series
 //Is also using batches
-public class NN_Alphabet
+public class NN_Alphabet: MonoBehaviour
 {
-    public NN_Alphabet()
+    private void Start()
+    {
+        Generate();
+    }
+
+
+
+    private void Generate()
     {
         string alphabet = "abcdefghijklmnopqrstuvwxyz";
 

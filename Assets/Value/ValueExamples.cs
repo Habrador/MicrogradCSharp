@@ -3,8 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ValueExamples
+public class ValueExamples : MonoBehaviour
 {
+    private void Start()
+    {
+        //TestGradients();
+
+        //HowDerivativesWork();
+
+        //BasicNeuron();
+
+        XOR_Gate_Just_Values xor = new();
+    }
+
+
+
     //Test example from the micrograd github repo https://github.com/karpathy/micrograd
     public void TestGradients()
     {
