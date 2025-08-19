@@ -90,7 +90,7 @@ public class TwisterController : MonoBehaviour
 
         float learningRate = 1f;
 
-        int epochs = 500;
+        int epochs = 100;
 
         System.Diagnostics.Stopwatch timer = new();
 

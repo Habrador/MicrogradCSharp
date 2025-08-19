@@ -26,7 +26,7 @@ namespace Micrograd
         //Negative log likelihood aka categorical crossentropy
         public Value NLL(Value[][] outputs, int[] labels) => CategoricalCrossentropy.Forward(outputs, labels);
         //Mean Squared Error
-        public Value MSE(Value[] networkOutputs, Value[] wantedoutputs) => MeanSquaredError.Forward(networkOutputs, wantedoutputs);
+        public Value MSE(Value[][] networkOutputs, Value[][] wantedoutputs) => MeanSquaredError.Forward(networkOutputs, wantedoutputs);
 
 
 

@@ -8,9 +8,11 @@ public class NN_Regression : MonoBehaviour
 {
     private void Start()
     {
-        YouTube_Example();
+        //YouTube_Example();
 
         //XOR_Gate_NN();
+
+        XOR_Gate_NN_Relu();
     }
 
 
@@ -28,11 +30,11 @@ public class NN_Regression : MonoBehaviour
             new[] { 0.5f, 1f, 1f },
             new[] { 1f, 1f, -1f } };
 
-        float[] outputDataFloat = new[] { 1f, -1f, -1f, 1f };
+        float[][] outputDataFloat = new[] { new[] { 1f }, new[] { -1f }, new[] { -1f }, new[] { 1f } };
 
         //Convert training data from float to Value
         Value[][] inputData = Value.Convert(inputDataFloat);
-        Value[] outputData = Value.Convert(outputDataFloat);
+        Value[][] outputData = Value.Convert(outputDataFloat);
 
         //How fast/slow the network will learn
         float learningRate = 0.1f;
@@ -64,11 +66,11 @@ public class NN_Regression : MonoBehaviour
 
         //Training data XOR
         float[][] inputDataFloat = { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } };
-        float[] outputDataFloat = new[] { 0f, 1f, 1f, 0f };
+        float[][] outputDataFloat = new[] { new[] { 0f }, new[] { 1f }, new[] { 1f }, new[] { 0f } };
 
         //Convert training data from float to Value
         Value[][] inputData = Value.Convert(inputDataFloat);
-        Value[] outputData = Value.Convert(outputDataFloat);
+        Value[][] outputData = Value.Convert(outputDataFloat);
 
         //How fast/slow the network will learn
         float learningRate = 0.1f;
@@ -99,11 +101,11 @@ public class NN_Regression : MonoBehaviour
 
         //Training data XOR
         float[][] inputDataFloat = { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } };
-        float[] outputDataFloat = new[] { 0f, 1f, 1f, 0f };
+        float[][] outputDataFloat = new[] { new[] { 0f }, new[] { 1f }, new[] { 1f }, new[] { 0f } };
 
         //Convert training data from float to Value
         Value[][] inputData = Value.Convert(inputDataFloat);
-        Value[] outputData = Value.Convert(outputDataFloat);
+        Value[][] outputData = Value.Convert(outputDataFloat);
 
         //How fast/slow the network will learn
         float learningRate = 0.1f;
@@ -128,7 +130,7 @@ public class NN_Regression : MonoBehaviour
 
 
     //Method for training a Neural Network
-    private void TrainNN(MLP nn, float learningRate, int epochs, Value[][] inputData, Value[] outputData)
+    private void TrainNN(MLP nn, float learningRate, int epochs, Value[][] inputData, Value[][] outputData)
     {
         //Train
         Debug.Log("Training!");
@@ -138,7 +140,7 @@ public class NN_Regression : MonoBehaviour
             //Forward pass
 
             //Catch all outputs for this batch
-            Value[] networkOutputs = new Value[outputData.Length];
+            Value[][] networkOutputs = new Value[outputData.Length][];
 
             for (int inputDataIndex = 0; inputDataIndex < outputData.Length; inputDataIndex++)
             {
@@ -146,13 +148,13 @@ public class NN_Regression : MonoBehaviour
                 Value[] outputArray = nn.Activate(inputData[inputDataIndex]);
 
                 //We know we have just a single output
-                Value output = outputArray[0];
+                //Value output = outputArray[0];
 
-                networkOutputs[inputDataIndex] = output;
+                networkOutputs[inputDataIndex] = outputArray;
             }
 
             //Error calculations using MSE
-            Value loss = MeanSquaredError.Forward(networkOutputs, outputData);
+            Value loss = nn.MSE(networkOutputs, outputData);
 
             //Divide loss with batch size which is only needed if we have batches of different sizes?
 
@@ -181,7 +183,7 @@ public class NN_Regression : MonoBehaviour
 
 
     //Method for testing a neural network by comparing actual and wanted outputs 
-    private void TestNN(MLP nn, Value[][] inputData, Value[] outputData)
+    private void TestNN(MLP nn, Value[][] inputData, Value[][] outputData)
     {
         //Test the network
         Debug.Log("Testing!");
@@ -190,7 +192,7 @@ public class NN_Regression : MonoBehaviour
         {
             Value[] outputArray = nn.Activate(inputData[inputDataIndex]);
 
-            float wantedData = outputData[inputDataIndex].data;
+            float wantedData = outputData[inputDataIndex][0].data;
             float actualData = outputArray[0].data;
 
             Debug.Log("Wanted: " + wantedData + ", Actual: " + actualData);
