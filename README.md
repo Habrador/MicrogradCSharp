@@ -30,7 +30,9 @@ Neural Networks:
 
 * Classification:
 	* Predict the next character in the alphabet given a character
+	* Predict the class of a point organized like a twister
 
+<img src="/_media/twister-classification.jpg" width="400">
 
 ## How to create a Neural Network?
 
