@@ -108,7 +108,8 @@ public class NN_Regression : MonoBehaviour
         Value[][] outputData = Value.Convert(outputDataFloat);
 
         //How fast/slow the network will learn
-        float learningRate = 0.1f;
+        //Cant be 0.1
+        float learningRate = 0.01f;
 
         //How many times to go through all data when learning
         int epochs = 500;
@@ -120,8 +121,6 @@ public class NN_Regression : MonoBehaviour
         nn.AddLayer(nn.Linear(2, 8));
         nn.AddLayer(nn.ReLU());
         nn.AddLayer(nn.Linear(8, 1));
-        //Output layer needs to have sigmoid af -linear doesnt work
-        nn.AddLayer(nn.Sigmoid());
 
         TrainNN(nn, learningRate, epochs, inputData, outputData);
         TestNN(nn, inputData, outputData);
