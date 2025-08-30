@@ -227,7 +227,7 @@ public class TwisterController : MonoBehaviour
 
 
             //Calculate loss
-            Value loss = nn.NLL(outputs, labels);
+            Value loss = nn.NLL_Loss(outputs, labels);
 
             //Display the loss
             if (i % 10 == 0)

@@ -150,7 +150,7 @@ public class NN_Regression : MonoBehaviour
             }
 
             //Error calculations using MSE
-            Value loss = nn.MSE(networkOutputs, outputData);
+            Value loss = nn.MSE_Loss(networkOutputs, outputData);
 
             //Divide loss with batch size which is only needed if we have batches of different sizes?
 
