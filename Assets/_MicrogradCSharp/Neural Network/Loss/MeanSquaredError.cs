@@ -21,6 +21,8 @@ namespace Micrograd
                 loss += errorSquare;
             }
 
+            loss /= networkOutputs.Length;
+
             return loss;
         }
 

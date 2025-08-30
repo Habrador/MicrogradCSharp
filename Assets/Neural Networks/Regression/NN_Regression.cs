@@ -8,11 +8,11 @@ public class NN_Regression : MonoBehaviour
 {
     private void Start()
     {
-        //YouTube_Example();
+        YouTube_Example();
 
         //XOR_Gate_NN();
 
-        XOR_Gate_NN_Relu();
+        //XOR_Gate_NN_Relu();
     }
 
 
@@ -151,8 +151,6 @@ public class NN_Regression : MonoBehaviour
 
             //Error calculations using MSE
             Value loss = nn.MSE_Loss(networkOutputs, outputData);
-
-            //Divide loss with batch size which is only needed if we have batches of different sizes?
 
             if (i % 10 == 0)
             {

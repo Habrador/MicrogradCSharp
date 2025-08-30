@@ -34,7 +34,7 @@ public class NN_XOR_Minimal : MonoBehaviour
 
             for (int j = 0; j < inputData.Length; j++)
             {
-                loss += Value.Pow(nn.Activate(inputData[j])[0] - outputData[j], 2f); //MSE loss function
+                loss += Value.Pow(nn.Activate(inputData[j])[0] - outputData[j], 2f); //MSE loss function without the M
             }
 
             Debug.Log($"Iteration: {i}, Network error: {loss.data}");
