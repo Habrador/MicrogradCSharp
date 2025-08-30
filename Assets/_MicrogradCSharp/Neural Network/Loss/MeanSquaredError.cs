@@ -7,7 +7,7 @@ namespace Micrograd
     //Loss function Mean Squared Error (MSE)
     public class MeanSquaredError
     {
-        public static Value Forward(Value[] networkOutputs, Value[] wantedOutputs)
+        public static Value Forward(Value[] networkOutputs, Value[] wantedOutputs, bool doMean = true)
         {
             Value loss = new(0f);
 
@@ -21,7 +21,10 @@ namespace Micrograd
                 loss += errorSquare;
             }
 
-            loss /= networkOutputs.Length;
+            if (doMean)
+            {
+                loss /= networkOutputs.Length;
+            }
 
             return loss;
         }
@@ -35,8 +38,10 @@ namespace Micrograd
                 Value[] wantedOutput = wantedOutputs[j];
                 Value[] actualOutput = networkOutputs[j];
 
-                loss += Forward(wantedOutput, actualOutput);
+                loss += Forward(wantedOutput, actualOutput, doMean: false);
             }
+
+            loss /= (networkOutputs.Length * networkOutputs[0].Length);
 
             return loss;
         }
