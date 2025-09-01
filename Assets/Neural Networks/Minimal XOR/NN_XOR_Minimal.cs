@@ -27,6 +27,9 @@ public class NN_XOR_Minimal : MonoBehaviour
         //2 inputs, 3 neurons in the middle layer with tanh activation function, 1 output with no activation function
         nn.AddLayers(nn.Linear(2, 3), nn.Tanh(), nn.Linear(3, 1));
 
+        //Optimizer that will do gradient descent for us
+        Adam optimizer = nn.Adam_Optimizer(nn.GetParameters(), learningRate: 0.1f);
+
         //Train
         for (int i = 0; i <= 100; i++)
         {
@@ -39,13 +42,16 @@ public class NN_XOR_Minimal : MonoBehaviour
 
             Debug.Log($"Iteration: {i}, Network error: {loss.data}");
 
-            nn.ZeroGrad();
+            optimizer.ZeroGrad();
+            
             loss.Backward(); //The notorious backpropagation
 
-            foreach (Value param in nn.GetParameters()) //Update weights and biases
-            {
-                param.data -= 0.1f * param.grad; //Gradient descent with 0.1 learning rate
-            }
+            //Update weights and biases
+            optimizer.Step();
+            //foreach (Value param in nn.GetParameters()) //Update weights and biases
+            //{
+            //    param.data -= 0.1f * param.grad; //Gradient descent with 0.1 learning rate
+            //}
         }
 
         //Test

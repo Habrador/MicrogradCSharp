@@ -95,6 +95,9 @@ MLP nn = new();
 //2 inputs, 3 neurons in the middle layer with tanh activation function, 1 output with no activation function
 nn.AddLayers(nn.Linear(2, 3), nn.Tanh(), nn.Linear(3, 1)); 
 
+//Optimizer that will do gradient descent for us
+Adam optimizer = nn.Adam_Optimizer(nn.GetParameters(), learningRate: 0.1f);
+
 //Train
 for (int i = 0; i <= 100; i++)
 {
@@ -107,13 +110,11 @@ for (int i = 0; i <= 100; i++)
 
     Debug.Log($"Iteration: {i}, Network error: {loss.data}");
 
-    nn.ZeroGrad();
-    loss.Backward(); //The notorious backpropagation
+    optimizer.ZeroGrad(); //Reset gradients
 
-    foreach (Value param in nn.GetParameters()) //Update weights and biases
-    {
-        param.data -= 0.1f * param.grad; //Gradient descent with 0.1 learning rate
-    }
+	loss.Backward(); //The notorious backpropagation
+
+	optimizer.Step(); //Update weights and biases
 }
 
 //Test
@@ -127,10 +128,10 @@ When I ran the Neural Network I got the following results:
 
 | Input 1  | Input  2 | Wanted   | Actual   |
 | ---------| -------- | -------- | -------- |
-| 0        | 0        | 0        | -0,01415 |
-| 0        | 1        | 1        | 0,988658 |
-| 1        | 0        | 1        | 0,984572 |
-| 1        | 1        | 0        | -0,01677 |
+| 0        | 0        | 0        | 0,008705 |
+| 0        | 1        | 1        | 0,994957 |
+| 1        | 0        | 1        | 0,993833 |
+| 1        | 1        | 0        | 0,006619 |
 
 The outputs are very close to the 0 and 1 we wanted - the output will never be exactly 0 or 1. 
 
