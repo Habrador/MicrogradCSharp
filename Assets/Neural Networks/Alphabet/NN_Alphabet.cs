@@ -13,6 +13,8 @@ public class NN_Alphabet: MonoBehaviour
 {
     private void Start()
     {
+        MicroMath.Random.Seed(2);
+
         Generate();
     }
 
@@ -67,8 +69,6 @@ public class NN_Alphabet: MonoBehaviour
         //
         // Init the NN
         //
-
-        MicroMath.Random.Seed(2);
 
         System.Random rng = Micrograd.MicroMath.Random.GetGenerator;
 

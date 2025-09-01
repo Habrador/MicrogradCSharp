@@ -13,7 +13,7 @@ namespace Micrograd
     {
         private readonly int[] indices;
 
-        private readonly System.Random rng;
+        private System.Random rng;
 
         //Get a shuffled index
         public int this[int i] => indices[i];
@@ -40,7 +40,7 @@ namespace Micrograd
 
 
         //Shuffle using the Fisher-Yates shuffle algorithm: https://www.dotnetperls.com/fisher-yates-shuffle
-        private void Shuffle(System.Random rng = null)
+        private void Shuffle()
         {
             int n = indices.Length;
 
