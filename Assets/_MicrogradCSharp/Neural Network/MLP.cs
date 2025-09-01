@@ -30,6 +30,12 @@ namespace Micrograd
         //If we have just a single output
         public Value MSE_Loss(Value[] networkOutputs, Value[] wantedoutputs) => MeanSquaredError.Forward(networkOutputs, wantedoutputs);
 
+        //Optimizers
+        //Stochastic Gradient Descent (optionally with momentum)
+        public SGD SGD_Optimizer(Value[] parameters, float learningRate, float momentum = 0f) => new(parameters, learningRate, momentum);
+        //Adaptive Momentum
+        public Adam Adam_Optimizer(Value[] parameters, float learningRate) => new(parameters, learningRate);
+
 
 
         public MLP()

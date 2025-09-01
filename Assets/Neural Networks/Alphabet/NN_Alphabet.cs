@@ -72,9 +72,6 @@ public class NN_Alphabet: MonoBehaviour
 
         System.Random rng = Micrograd.MicroMath.Random.GetGenerator;
 
-        //How fast/slow the network will learn
-        float learningRate = 1f;
-
         //How many times to go through all data when learning
         int epochs = 20;
 
@@ -89,6 +86,10 @@ public class NN_Alphabet: MonoBehaviour
             nn.Linear(27, 27, useBias: true),
             nn.Softmax()
         );
+
+        //Init optimizers
+        //SGD optimizer = nn.SGD_Optimizer(nn.GetParameters(), learningRate : 1f, momentum : 0.5f);
+        Adam optimizer = nn.Adam_Optimizer(nn.GetParameters(), 0.1f);
 
 
 
@@ -108,7 +109,7 @@ public class NN_Alphabet: MonoBehaviour
 
         Debug.Log("Training!");
 
-        TrainNN(nn, epochs, batchSize, learningRate, xec, ys, rng);
+        TrainNN(nn, epochs, batchSize, optimizer, xec, ys, rng);
 
 
 
@@ -170,7 +171,7 @@ public class NN_Alphabet: MonoBehaviour
 
 
     //Training loop
-    private void TrainNN(MLP nn, int epochs, int batchSize, float learningRate, Value[][] xecValue, List<int> ys, System.Random rng)
+    private void TrainNN(MLP nn, int epochs, int batchSize, Optimizer optimizer, Value[][] xecValue, List<int> ys, System.Random rng)
     {
         //How many batches?
         int batches = Micrograd.DataManager.GetNumberOfBatches(batchSize, xecValue.Length);
@@ -238,17 +239,13 @@ public class NN_Alphabet: MonoBehaviour
 
                 //Backward pass
                 //Reset the gradients
-                nn.ZeroGrad();
+                optimizer.ZeroGrad();
+
                 //Calculate the gradients
                 batchLoss.Backward();
 
                 //Optimize the weights and biases by using gradient descent
-                Value[] parameters = nn.GetParameters();
-
-                foreach (Value param in parameters)
-                {
-                    param.data -= learningRate * param.grad;
-                }
+                optimizer.Step();
             }
 
             //Average loss over all batches

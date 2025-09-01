@@ -22,6 +22,11 @@ Loss functions:
 * Categorical Cross-Entropy (Negative Log-Likelihood (NLL))
 * Mean Squared Error (MSE)
 
+Optimizers:
+
+* SGD with momentum
+* Adam
+
 Neural Networks:
 
 * Regression:

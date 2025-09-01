@@ -82,13 +82,15 @@ public class TwisterController : MonoBehaviour
         nn.AddLayer(nn.Linear(16, 3));
         nn.AddLayer(nn.Softmax());
 
-        
+
 
         //
         // Train NN
         //
 
-        float learningRate = 1f;
+        //Init optimizers
+        //SGD optimizer = nn.SGD_Optimizer(nn.GetParameters(), learningRate : 1f, momentum : 0.5f);
+        Adam optimizer = nn.Adam_Optimizer(nn.GetParameters(), 0.1f);
 
         int epochs = 100;
 
@@ -96,7 +98,7 @@ public class TwisterController : MonoBehaviour
 
         timer.Start();
 
-        Train(nn, learningRate, epochs, coordinatesValue, labels);
+        Train(nn, optimizer, epochs, coordinatesValue, labels);
 
         Debug.Log($"Time to train NN: {timer.ElapsedMilliseconds / 1000f} seconds");
 
@@ -210,7 +212,7 @@ public class TwisterController : MonoBehaviour
 
 
     //The training loop
-    private void Train(MLP nn, float learningRate, int epochs, Value[][] input, int[] labels)
+    private void Train(MLP nn, Optimizer optimizer, int epochs, Value[][] input, int[] labels)
     {
         for (int i = 0; i <= epochs; i++)
         {
@@ -239,18 +241,19 @@ public class TwisterController : MonoBehaviour
             //Backward
             
             //Reset gradients
-            nn.ZeroGrad();
+            optimizer.ZeroGrad();
 
             //Calculate new gradients
             loss.Backward();
 
             //Optimize the weights and biases by using gradient descent
-            Value[] parameters = nn.GetParameters();
+            optimizer.Step();
+            //Value[] parameters = nn.GetParameters();
 
-            foreach (Value param in parameters)
-            {
-                param.data -= learningRate * param.grad;
-            }
+            //foreach (Value param in parameters)
+            //{
+            //    param.data -= learningRate * param.grad;
+            //}
         }
     }
 

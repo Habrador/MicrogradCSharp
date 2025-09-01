@@ -8,11 +8,11 @@ public class NN_Regression : MonoBehaviour
 {
     private void Start()
     {
-        YouTube_Example();
+        //YouTube_Example();
 
         //XOR_Gate_NN();
 
-        //XOR_Gate_NN_Relu();
+        XOR_Gate_NN_Relu();
     }
 
 
@@ -36,8 +36,6 @@ public class NN_Regression : MonoBehaviour
         Value[][] inputData = Value.Convert(inputDataFloat);
         Value[][] outputData = Value.Convert(outputDataFloat);
 
-        //How fast/slow the network will learn
-        float learningRate = 0.1f;
         //How many times to go through all data when learning
         int epochs = 100;
 
@@ -52,7 +50,16 @@ public class NN_Regression : MonoBehaviour
         nn.AddLayer(nn.Linear(4, 1));
         nn.AddLayer(nn.Tanh());
 
-        TrainNN(nn, learningRate, epochs, inputData, outputData);
+        //Create optimizer that will do gradient descent
+        //How fast/slow the network will learn
+        float learningRate = 0.1f;
+        //Momentum which help the NN to avoid getting stuck in local minima
+        float momentum = 0.0f;
+
+        //SGD optimizer = nn.SGD_Optimizer(nn.GetParameters(), learningRate, momentum);
+        Adam optimizer = nn.Adam_Optimizer(nn.GetParameters(), learningRate);
+
+        TrainNN(nn, optimizer, epochs, inputData, outputData);
         TestNN(nn, inputData, outputData);
     }
 
@@ -72,8 +79,6 @@ public class NN_Regression : MonoBehaviour
         Value[][] inputData = Value.Convert(inputDataFloat);
         Value[][] outputData = Value.Convert(outputDataFloat);
 
-        //How fast/slow the network will learn
-        float learningRate = 0.1f;
         //How many times to go through all data when learning
         int epochs = 100;
 
@@ -87,7 +92,16 @@ public class NN_Regression : MonoBehaviour
         nn.AddLayer(nn.Tanh());
         nn.AddLayer(nn.Linear(3, 1, useBias: true));
 
-        TrainNN(nn, learningRate, epochs, inputData, outputData);
+        //Create optimizer that will do gradient descent
+        //How fast/slow the network will learn
+        float learningRate = 0.1f;
+        //Momentum which help the NN to avoid getting stuck in local minima
+        float momentum = 1.0f;
+
+        //SGD optimizer = nn.SGD_Optimizer(nn.GetParameters(), learningRate, momentum);
+        Adam optimizer = nn.Adam_Optimizer(nn.GetParameters(), learningRate);
+
+        TrainNN(nn, optimizer, epochs, inputData, outputData);
         TestNN(nn, inputData, outputData);
     }
 
@@ -107,10 +121,6 @@ public class NN_Regression : MonoBehaviour
         Value[][] inputData = Value.Convert(inputDataFloat);
         Value[][] outputData = Value.Convert(outputDataFloat);
 
-        //How fast/slow the network will learn
-        //Cant be 0.1
-        float learningRate = 0.01f;
-
         //How many times to go through all data when learning
         int epochs = 500;
 
@@ -122,14 +132,23 @@ public class NN_Regression : MonoBehaviour
         nn.AddLayer(nn.ReLU());
         nn.AddLayer(nn.Linear(8, 1));
 
-        TrainNN(nn, learningRate, epochs, inputData, outputData);
+        //Create optimizer that will do gradient descent
+        //How fast/slow the network will learn
+        float learningRate = 0.01f;
+        //Momentum which help the NN to avoid getting stuck in local minima
+        float momentum = 0.5f;
+
+        //SGD optimizer = nn.SGD_Optimizer(nn.GetParameters(), learningRate, momentum);
+        Adam optimizer = nn.Adam_Optimizer(nn.GetParameters(), learningRate);
+
+        TrainNN(nn, optimizer, epochs, inputData, outputData);
         TestNN(nn, inputData, outputData);
     }
 
 
 
     //Method for training a Neural Network
-    private void TrainNN(MLP nn, float learningRate, int epochs, Value[][] inputData, Value[][] outputData)
+    private void TrainNN(MLP nn, Optimizer optimizer, int epochs, Value[][] inputData, Value[][] outputData)
     {
         //Train
         Debug.Log("Training!");
@@ -159,18 +178,20 @@ public class NN_Regression : MonoBehaviour
 
             //Backward pass
             //ZERO GRAD (remember we do A.grad += in Value class) so they will accumulate 4ever if we dont reset
-            nn.ZeroGrad();
+            optimizer.ZeroGrad();
 
             //Calculate the gradients
             loss.Backward();
 
             //Optimize the weights and biases by using gradient descent
-            Value[] parameters = nn.GetParameters();
+            optimizer.Step();
 
-            foreach (Value param in parameters)
-            {
-                param.data -= learningRate * param.grad;
-            }
+            //Value[] parameters = nn.GetParameters();
+
+            //foreach (Value param in parameters)
+            //{
+            //    param.data -= learningRate * param.grad;
+            //}
         }
     }
 
