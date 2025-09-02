@@ -42,16 +42,11 @@ public class NN_XOR_Minimal : MonoBehaviour
 
             Debug.Log($"Iteration: {i}, Network error: {loss.data}");
 
-            optimizer.ZeroGrad();
+            optimizer.ZeroGrad(); //Reset gradients
             
             loss.Backward(); //The notorious backpropagation
 
-            //Update weights and biases
-            optimizer.Step();
-            //foreach (Value param in nn.GetParameters()) //Update weights and biases
-            //{
-            //    param.data -= 0.1f * param.grad; //Gradient descent with 0.1 learning rate
-            //}
+            optimizer.Step(); //Update weights and biases
         }
 
         //Test
