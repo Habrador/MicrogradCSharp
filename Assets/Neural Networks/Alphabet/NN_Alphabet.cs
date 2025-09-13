@@ -173,11 +173,13 @@ public class NN_Alphabet: MonoBehaviour
     //Training loop
     private void TrainNN(MLP nn, int epochs, int batchSize, Optimizer optimizer, Value[][] xecValue, List<int> ys, System.Random rng)
     {
-        //How many batches?
-        int batches = Micrograd.DataManager.GetNumberOfBatches(batchSize, xecValue.Length);
+        //How many data items do we have?
+        int dataSize = xecValue.Length;
 
-        //Shuffle data each epoch so each batch always includes different examples
-        Permutator dataShuffler = new(xecValue.Length, rng);
+        BatchManager batchManager = new(dataSize, batchSize, rng);
+
+        //How many batches do we have?
+        int batches = batchManager.BatchCount;
 
         //Timer
         System.Diagnostics.Stopwatch timer = new();
@@ -191,22 +193,15 @@ public class NN_Alphabet: MonoBehaviour
             float epochLoss = 0f;
 
             //Shuffle the data
-            dataShuffler.Permute();
+            batchManager.ShuffleIndex();
 
             for (int batchNumber = 0; batchNumber < batches; batchNumber++)
             {
-                //Cache the shuffled data once in an array which makes it less confusing
-                List<int> shuffledBatchIndices = new();
+                //The indices in the original arrays belonging to this batch
+                int[] shuffledBatchIndex = batchManager.GetShuffledBatchIndex(batchNumber);
 
-                //The indices in dataShuffler array for this batch
-                Micrograd.DataManager.GetBatchStartAndEndIndex(batchNumber, batchSize, xecValue.Length, out int batchStartIndex, out int batchEndIndex);
-
-                for (int j = batchStartIndex; j <= batchEndIndex; j++)
-                {
-                    shuffledBatchIndices.Add(dataShuffler[j]);
-                }
-
-                int actualBatchSize = shuffledBatchIndices.Count;
+                //This might be smaller than batch size if batch size and total data size are not adding up!
+                int actualBatchSize = shuffledBatchIndex.Length;
 
 
                 //Forward pass
@@ -214,9 +209,9 @@ public class NN_Alphabet: MonoBehaviour
                 //Catch all outputs for this batch
                 Value[][] networkOutputs = new Value[actualBatchSize][];
 
-                for (int j = 0; j < shuffledBatchIndices.Count; j++)
+                for (int j = 0; j < shuffledBatchIndex.Length; j++)
                 {
-                    int shuffledIndex = shuffledBatchIndices[j];
+                    int shuffledIndex = shuffledBatchIndex[j];
 
                     Value[] inputData = xecValue[shuffledIndex];
                     
@@ -230,7 +225,7 @@ public class NN_Alphabet: MonoBehaviour
 
                 //Loss calculations using negative log likelihood aka Categorical Crossentropy
                 //The shuffled indices where we want the one-hot to be 1
-                int[] oneHotOutputIndices = shuffledBatchIndices.Select(shuffledIndex => ys[shuffledIndex]).ToArray();
+                int[] oneHotOutputIndices = shuffledBatchIndex.Select(shuffledIndex => ys[shuffledIndex]).ToArray();
 
                 Value batchLoss = CategoricalCrossentropy.Forward(networkOutputs, oneHotOutputIndices);
 

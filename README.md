@@ -39,6 +39,11 @@ Neural Networks:
 
 <img src="/_media/twister-classification.jpg" width="200">
 
+Help functions:
+
+* Batch manager that makes it easy to work with batches when training Neural Networks
+
+
 ## How to create a Neural Network?
 
 You can create it layer-by-layer:

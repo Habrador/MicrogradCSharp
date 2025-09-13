@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace Micrograd
 {
     //Instead of shuffling the actual array with the data, which might be slow, we shuffle an array with indicies
@@ -13,41 +14,35 @@ namespace Micrograd
     {
         private readonly int[] indices;
 
-        private System.Random rng;
+        private readonly System.Random rng;
 
         //Get a shuffled index
         public int this[int i] => indices[i];
 
+        public int Size => indices.Length;
 
 
-        public Permutator(int size, System.Random rng = null)
+
+        public Permutator(int size, System.Random myRng = null)
         {
             this.indices = Enumerable.Range(0, size).ToArray();
 
-            this.rng = rng;
-
-            Shuffle();
-        }
-
-
-
-        //Shuffe the array again
-        public void Permute()
-        {
-            Shuffle();
+            if (myRng == null)
+            {
+                this.rng = new System.Random();
+            }
+            else
+            {
+                this.rng = myRng; 
+            }
         }
 
 
 
         //Shuffle using the Fisher-Yates shuffle algorithm: https://www.dotnetperls.com/fisher-yates-shuffle
-        private void Shuffle()
+        public void Shuffle()
         {
             int n = indices.Length;
-
-            if (rng == null)
-            {
-                rng = new System.Random();
-            }
 
             for (int i = 0; i < n - 1; i++)
             {
