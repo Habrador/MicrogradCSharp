@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace Micrograd
 {
-    //Loss function: Categorical Crossentropy (aka negative log likelihood)
-    public class CategoricalCrossentropy
+    //Loss function: Negative Log-Likelihood (NLL)
+    public class NegativeLogLikelihood
     {
         //networkOutputs are output from NN after Softmax
         //oneHotIndex are the indices we want the Softmax output to be 1
@@ -37,6 +37,5 @@ namespace Micrograd
 
             return batchLoss;
         }
-
     }
 }

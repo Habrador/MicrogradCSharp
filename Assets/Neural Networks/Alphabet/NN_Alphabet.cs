@@ -227,7 +227,7 @@ public class NN_Alphabet: MonoBehaviour
                 //The shuffled indices where we want the one-hot to be 1
                 int[] oneHotOutputIndices = shuffledBatchIndex.Select(shuffledIndex => ys[shuffledIndex]).ToArray();
 
-                Value batchLoss = CategoricalCrossentropy.Forward(networkOutputs, oneHotOutputIndices);
+                Value batchLoss = NegativeLogLikelihood.Forward(networkOutputs, oneHotOutputIndices);
 
                 epochLoss += batchLoss.data;
 

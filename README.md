@@ -19,7 +19,7 @@ Activation functions:
 
 Loss functions:
 
-* Categorical Cross-Entropy (Negative Log-Likelihood (NLL))
+* Negative Log-Likelihood (NLL)
 * Mean Squared Error (MSE)
 
 Optimizers:

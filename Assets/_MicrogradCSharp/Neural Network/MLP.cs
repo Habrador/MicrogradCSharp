@@ -23,8 +23,8 @@ namespace Micrograd
         public Softmax Softmax() => new();
 
         //Loss functions
-        //Negative log likelihood aka categorical crossentropy
-        public Value NLL_Loss(Value[][] outputs, int[] labels) => CategoricalCrossentropy.Forward(outputs, labels);
+        //Negative log likelihood
+        public Value NLL_Loss(Value[][] outputs, int[] labels) => NegativeLogLikelihood.Forward(outputs, labels);
         //Mean Squared Error
         public Value MSE_Loss(Value[][] networkOutputs, Value[][] wantedoutputs) => MeanSquaredError.Forward(networkOutputs, wantedoutputs);
         //If we have just a single output
