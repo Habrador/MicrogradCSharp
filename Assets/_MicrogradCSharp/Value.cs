@@ -61,6 +61,7 @@ namespace Micrograd
             //Reverse the topo list so we start at the end
             topo.Reverse();
 
+            //Gradient wrt to self is always 1
             this.grad = 1f;
 
             foreach (Value node in topo)
