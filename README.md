@@ -1,8 +1,8 @@
 # MicrogradCSharp
 
-MicrogradCSharp is an open-source Artificial Intelligence project that implements a tiny scalar-valued automatic differentiation (autograd) engine and a Neural Network library for C# within the Unity game engine. There's nothing Unity specific in the library so you can use it for other C# projects as well.  
+MicrogradCSharp is an open-source Artificial Intelligence project. It implements a scalar-valued automatic differentiation (autograd) engine, so you don't have to implement backpropagation on your own, and a Neural Network library for C# within the Unity game engine. There's nothing Unity specific in the library so you can use it for other C# projects as well.  
 
-This library provides a lightweight, efficient, and simple way to build and train Neural Networks directly in Unity. Whether you're prototyping a new game AI or experimenting with Neural Networks, MicrogradCSharp offers a straightforward and intuitive code library to get you started.
+This library provides a lightweight, efficient, and simple way to build and train Neural Networks directly in Unity. Whether you're prototyping a new game AI or experimenting with Neural Networks, MicrogradCSharp offers a straightforward and intuitive code library to get you started. You can do regression, you can do classification - and you can even do reinforcement learning. 
 
 > [!CAUTION]
 > We all saw in Terminator what can happen if you experiment too much with Artifical Intelligence, please be careful.  
